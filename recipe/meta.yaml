@@ -1,5 +1,7 @@
 {% set name = "clr_loader" %}
 {% set version = "0.2.4" %}
+{% set checksum = "7b4516e363b3054b46e93a3d39cb1968e58d6eeccea0e8c0bc86f1100a2f4cc5" %}
+{% set build = "0"}
 
 package:
   name: {{ name|lower }}
@@ -7,11 +9,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 7b4516e363b3054b46e93a3d39cb1968e58d6eeccea0e8c0bc86f1100a2f4cc5
+  sha256: {{ checksum }}
 
 build:
-  number: 0
-  noarch: python
+  number: {{ build }}
+  skip: True # [py<37]
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
