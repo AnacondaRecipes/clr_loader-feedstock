@@ -32,9 +32,9 @@ test:
     - clr_loader
   requires:
     - pip
-    - dotnet-runtime 6.0
+    - dotnet-runtime >=6.0
     - importlib_resources
-    - mono
+    - mono # [unix]
   commands:
     - pip check
 
