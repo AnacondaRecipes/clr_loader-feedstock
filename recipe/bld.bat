@@ -5,4 +5,4 @@ powershell %BUILD_PREFIX%\dotnet-install.ps1 -InstallDir %BUILD_PREFIX%\dotnet -
 set PATH=%BUILD_PREFIX%\dotnet;%PATH%
 
 REM Now install the package
-%PYTHON% -m pip install . -vv
+%PYTHON% -m pip install . --no-deps -vv

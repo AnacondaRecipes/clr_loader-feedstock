@@ -5,4 +5,4 @@ source $BUILD_PREFIX/dotnet-install.sh --install-dir $BUILD_PREFIX/dotnet --vers
 export PATH="$BUILD_PREFIX/dotnet:$PATH"
 
 # Now install the package.
-$PYTHON -m pip install . -vv
+$PYTHON -m pip install . --no-deps -vv

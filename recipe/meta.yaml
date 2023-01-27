@@ -13,21 +13,20 @@ build:
   number: 0
   # We skip for PPC64 since the dotnet binaries for this architecture aren't available.
   skip: True # [ppc64le]
+  skip: True # [py<37]
 
 requirements:
   host:
-    - python >=3.7
+    - python
     - pip
-    - setuptools >=61
+    - setuptools
     - setuptools-scm
     - wheel
   run:
     - cffi >=1.13
-    - python >=3.7
+    - python
 
 test:
-  imports:
-    - clr_loader
   requires:
     - pip
     - importlib_resources
@@ -40,6 +39,9 @@ about:
   license_family: MIT
   license_file: LICENSE
   summary: Generic pure Python loader for .NET runtimes
+  description: |
+    Implements a generic interface for loading one of the CLR (.NET) runtime
+    implementations and calling simple functions on them.
   dev_url: https://github.com/pythonnet/clr-loader
   doc_url: https://pythonnet.github.io/clr-loader/
 
