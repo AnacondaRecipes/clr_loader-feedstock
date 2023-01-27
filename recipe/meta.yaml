@@ -22,6 +22,7 @@ requirements:
     - setuptools
     - setuptools-scm
     - wheel
+    - icu    # [linux]
   run:
     - cffi >=1.13
     - python
@@ -48,3 +49,4 @@ about:
 extra:
   recipe-maintainers:
     - m-rossi
+    - sumit0190
