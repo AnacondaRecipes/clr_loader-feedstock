@@ -22,7 +22,6 @@ requirements:
     - setuptools
     - setuptools-scm
     - wheel
-    - icu    # [linux]
   run:
     - cffi >=1.13
     - python
