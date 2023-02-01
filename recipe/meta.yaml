@@ -1,5 +1,5 @@
 {% set name = "clr_loader" %}
-{% set version = "0.2.4" %}
+{% set version = "0.2.5" %}
 
 package:
   name: {{ name|lower }}
@@ -7,34 +7,30 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 7b4516e363b3054b46e93a3d39cb1968e58d6eeccea0e8c0bc86f1100a2f4cc5
+  sha256: 82ed5fb654729d14fd88296e74bb6b84eb2cfb976ff4b7d49d4e449fd78a226b
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  # We skip for PPC64 and s390x since the dotnet binaries for this architecture aren't available.
+  skip: True # [ppc64le or s390x]
+  skip: True # [py<37]
 
 requirements:
-  build:
-    - dotnet-sdk >=6
   host:
-    - python >=3.7
+    - python
     - pip
-    - setuptools >=61
-    - setuptools-scm
+    - setuptools
+    - setuptools_scm
     - wheel
+    - toml
   run:
     - cffi >=1.13
-    - python >=3.7
+    - python
 
 test:
-  imports:
-    - clr_loader
   requires:
     - pip
-    - dotnet-runtime 6.0
     - importlib_resources
-    - mono
   commands:
     - pip check
 
@@ -44,8 +40,13 @@ about:
   license_family: MIT
   license_file: LICENSE
   summary: Generic pure Python loader for .NET runtimes
+  description: |
+    Implements a generic interface for loading one of the CLR (.NET) runtime
+    implementations and calling simple functions on them.
   dev_url: https://github.com/pythonnet/clr-loader
+  doc_url: https://pythonnet.github.io/clr-loader/
 
 extra:
   recipe-maintainers:
     - m-rossi
+    - sumit0190
