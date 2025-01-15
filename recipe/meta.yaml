@@ -24,7 +24,8 @@ requirements:
     - wheel
     - toml
   run:
-    - cffi >=1.13
+    - cffi >=1.13  # [py<38]
+    - cffi >=1.17  # [py>=38]
     - python
 
 test:
