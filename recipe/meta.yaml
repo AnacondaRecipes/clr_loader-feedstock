@@ -1,28 +1,26 @@
 {% set name = "clr_loader" %}
-{% set version = "0.2.7.post0" %}
+{% set version = "0.2.9" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: b7a8b3f8fbb1bcbbb6382d887e21d1742d4f10b5ea209e4ad95568fe97e1c7c6
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 6af3d582c3de55ce9e9e676d2b3dbf6bc680c4ea8f76c58786739a5bdcf6b52d
 
 build:
   number: 0
-  # We skip for PPC64 and s390x since the dotnet binaries for this architecture aren't available.
-  skip: True # [ppc64le or s390x]
-  skip: True # [py<37]
+  skip: true  # [py<37]
 
 requirements:
   host:
     - python
     - pip
-    - setuptools
-    - setuptools_scm
+    - setuptools >=75
     - wheel
     - toml
+    - setuptools-scm
   run:
     - cffi >=1.13  # [py<38]
     - cffi >=1.17  # [py>=38]
@@ -31,9 +29,19 @@ requirements:
 test:
   requires:
     - pip
-    - importlib_resources
+    - python
+    - dotnet # [not linux]
+    - pytest >=7.0
+  source_files:
+    - tests/
+    - example/
+  imports:
+    - clr_loader
   commands:
     - pip check
+    # Skip mono tests - no package available on main channel
+    # Skip linux tests - compatibility issues with dotnet
+    - pytest -v tests/ -k "not mono and not test_coreclr_properties" # [not linux]
 
 about:
   home: https://github.com/pythonnet/clr-loader
@@ -42,10 +50,10 @@ about:
   license_file: LICENSE
   summary: Generic pure Python loader for .NET runtimes
   description: |
-    Implements a generic interface for loading one of the CLR (.NET) runtime
-    implementations and calling simple functions on them.
+    Implements a generic interface for loading one of the CLR (.NET)
+    runtime implementations and calling simple functions on them.
   dev_url: https://github.com/pythonnet/clr-loader
-  doc_url: https://pythonnet.github.io/clr-loader/
+  doc_url: https://pythonnet.github.io/clr-loader
 
 extra:
   recipe-maintainers:
