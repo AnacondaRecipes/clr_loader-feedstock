@@ -51,8 +51,8 @@ about:
   license_file: LICENSE
   summary: Generic pure Python loader for .NET runtimes
   description: |
-    Implements a generic interface for loading one of the CLR (.NET) runtime
-    implementations and calling simple functions on them.
+    Implements a generic interface for loading one of the CLR (.NET)
+    runtime implementations and calling simple functions on them.
   dev_url: https://github.com/pythonnet/clr-loader
   doc_url: https://pythonnet.github.io/clr-loader
 
