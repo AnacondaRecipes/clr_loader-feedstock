@@ -18,7 +18,6 @@ requirements:
     - python
     - pip
     - setuptools >=75
-    - setuptools_scm
     - wheel
     - toml
     - setuptools-scm
