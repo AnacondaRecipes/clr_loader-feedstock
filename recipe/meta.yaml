@@ -20,9 +20,7 @@ requirements:
     - setuptools >=75
     - wheel
     - toml
-    - setuptools-scm
   run:
-    - cffi >=1.13  # [py<38]
     - cffi >=1.17  # [py>=38]
     - python
 
