@@ -29,7 +29,7 @@ test:
     - pip
     - python
     - dotnet # [not linux]
-    - pytest >=7.0
+    - pytest >=9.0,<10
   source_files:
     - tests/
     - example/
@@ -39,7 +39,8 @@ test:
     - pip check
     # Skip mono tests - no package available on main channel
     # Skip linux tests - compatibility issues with dotnet
-    - pytest -v tests/ -k "not mono and not test_coreclr_properties" # [not linux]
+    # Skip test_coreclr - we don't have dotnet dotnet-sdk version 10 which the tests build against. restore once available.
+    - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr" # [not linux]
 
 about:
   home: https://github.com/pythonnet/clr-loader
