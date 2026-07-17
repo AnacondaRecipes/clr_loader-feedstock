@@ -17,13 +17,11 @@ requirements:
   host:
     - python
     - pip
-    - setuptools >=75
-    - wheel
-    - toml
+    - setuptools >=80
     - setuptools-scm
+    - toml
   run:
-    - cffi >=1.13  # [py<38]
-    - cffi >=1.17  # [py>=38]
+    - cffi >=1.17
     - python
 
 test:
