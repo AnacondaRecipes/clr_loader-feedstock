@@ -1,5 +1,5 @@
 {% set name = "clr_loader" %}
-{% set version = "0.2.9" %}
+{% set version = "0.3.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,23 +7,21 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 6af3d582c3de55ce9e9e676d2b3dbf6bc680c4ea8f76c58786739a5bdcf6b52d
+  sha256: 2e073e9aaf49d1ae2f56ecba27987ad5fb68be4bcd9dd34a5bed8f0e4e128366
 
 build:
   number: 0
-  skip: true  # [py<37]
+  skip: true  # [py<310]
 
 requirements:
   host:
     - python
     - pip
-    - setuptools >=75
-    - wheel
-    - toml
+    - setuptools >=80
     - setuptools-scm
+    - toml
   run:
-    - cffi >=1.13  # [py<38]
-    - cffi >=1.17  # [py>=38]
+    - cffi >=1.17
     - python
 
 test:
@@ -31,7 +29,7 @@ test:
     - pip
     - python
     - dotnet # [not linux]
-    - pytest >=7.0
+    - pytest >=9.0,<10
   source_files:
     - tests/
     - example/
@@ -39,9 +37,14 @@ test:
     - clr_loader
   commands:
     - pip check
+    # dotnet 10 unavailable: since example/example.csproj has it's TargetFrameworks specified as "net10.0;netstandard2.0", we
+    # must make MSBuild "unsee" net10.0 part (unsupported target), either via patch, or via configuration (is as done here).
+    # Otherwise MSBuild behavior is to error out if any of the targets are unsupported. Can be skipped once dotnet 10 is available.
+    - echo -p:TargetFrameworks=netstandard2.0> example\Directory.Build.rsp  # [win]
     # Skip mono tests - no package available on main channel
     # Skip linux tests - compatibility issues with dotnet
-    - pytest -v tests/ -k "not mono and not test_coreclr_properties" # [not linux]
+    # Skip test_coreclr - we don't have dotnet dotnet-sdk version 10 which the tests build against. restore once available.
+    - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr" # [not linux]
 
 about:
   home: https://github.com/pythonnet/clr-loader
