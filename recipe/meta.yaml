@@ -37,6 +37,10 @@ test:
     - clr_loader
   commands:
     - pip check
+    # dotnet 10 unavailable: since example/example.csproj has it's TargetFrameworks specified as "net10.0;netstandard2.0", we
+    # must make MSBuild "unsee" net10.0 part (unsupported target), either via patch, or via configuration (is as done here).
+    # Otherwise MSBuild behavior is to error out if any of the targets are unsupported. Can be skipped once dotnet 10 is available.
+    - echo -p:TargetFrameworks=netstandard2.0> example\Directory.Build.rsp  # [win]
     # Skip mono tests - no package available on main channel
     # Skip linux tests - compatibility issues with dotnet
     # Skip test_coreclr - we don't have dotnet dotnet-sdk version 10 which the tests build against. restore once available.
