@@ -2,7 +2,7 @@
 {% set version = "0.3.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -10,7 +10,7 @@ source:
   sha256: 2e073e9aaf49d1ae2f56ecba27987ad5fb68be4bcd9dd34a5bed8f0e4e128366
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<310]
 
 requirements:
@@ -44,7 +44,8 @@ test:
     # Skip mono tests - no package available on main channel
     # Skip linux tests - compatibility issues with dotnet
     # Skip test_coreclr - we don't have dotnet dotnet-sdk version 10 which the tests build against. restore once available.
-    - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr" # [not linux]
+    # Skip test_netfx .NET Framework subprocess tests not viable on win-arm64
+    - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr and not test_netfx" # [not linux]
 
 about:
   home: https://github.com/pythonnet/clr-loader
