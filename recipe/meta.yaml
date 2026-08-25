@@ -10,7 +10,7 @@ source:
   sha256: 2e073e9aaf49d1ae2f56ecba27987ad5fb68be4bcd9dd34a5bed8f0e4e128366
 
 build:
-  number: 1
+  number: 0
   skip: true  # [py<310]
 
 requirements:
@@ -45,7 +45,7 @@ test:
     # Skip linux tests - compatibility issues with dotnet
     # Skip test_coreclr - we don't have dotnet dotnet-sdk version 10 which the tests build against. restore once available.
     # Skip win-arm64 .NET Framework subprocess tests not viable in main channel
-    - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr" # [not linux and not (win and arm64)]
+    - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr" # [not linux or not (win and arm64)]
 
 about:
   home: https://github.com/pythonnet/clr-loader
