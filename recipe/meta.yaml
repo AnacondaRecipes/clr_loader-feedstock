@@ -2,7 +2,7 @@
 {% set version = "0.3.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -44,7 +44,8 @@ test:
     # Skip mono tests - no package available on main channel
     # Skip linux tests - compatibility issues with dotnet
     # Skip test_coreclr - we don't have dotnet dotnet-sdk version 10 which the tests build against. restore once available.
-    - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr" # [not linux]
+    # Skip win-arm64 .NET Framework subprocess tests not viable in main channel
+    - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr" # [not linux or not (win and arm64)]
 
 about:
   home: https://github.com/pythonnet/clr-loader
