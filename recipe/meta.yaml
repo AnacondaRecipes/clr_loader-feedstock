@@ -14,6 +14,8 @@ build:
   skip: true  # [py<310]
 
 requirements:
+  build:
+    - dotnet-sdk 8.0.*
   host:
     - python
     - pip
@@ -45,7 +47,8 @@ test:
     # Skip linux tests - compatibility issues with dotnet
     # Skip test_coreclr - we don't have dotnet dotnet-sdk version 10 which the tests build against. restore once available.
     # Skip win-arm64 .NET Framework subprocess tests not viable in main channel
-    - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr" # [not linux or not (win and arm64)]
+    - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr" # [osx]
+
 
 about:
   home: https://github.com/pythonnet/clr-loader
