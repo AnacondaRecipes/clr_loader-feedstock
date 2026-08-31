@@ -49,6 +49,7 @@ test:
     # Skip win-arm64 .NET Framework subprocess tests not viable in main channel
     - pytest -v tests/ -k "not mono and not test_coreclr_properties and not test_coreclr" # [osx]
 
+
 about:
   home: https://github.com/pythonnet/clr-loader
   license: MIT
